@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./backend
+    container_name: backend-test
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: "mongodb://host.docker.internal:27017/url_shortener"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_API_URL: "http://localhost:5000"
+    container_name: frontend-test
+    ports:
+      - "3000:80"
