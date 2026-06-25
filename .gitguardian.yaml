@@ -1,5 +1,5 @@
 version: 2
 
-paths-ignore:
+paths_ignore:
   - terraform/**
   - k8s/**
