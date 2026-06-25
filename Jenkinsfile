@@ -24,11 +24,11 @@ pipeline {
     stage('SonarQube Scan') {
       steps {
         script {
-            def scannerHome = tool(name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation')
+          def scannerHome = tool(name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation')
 
-            withSonarQubeEnv('SonarQube') {
-                sh "${scannerHome}/bin/sonar-scanner"
-            }
+          withSonarQubeEnv('SonarQube') {
+            sh "${scannerHome}/bin/sonar-scanner"
+          }
         }
       }
     }
@@ -37,10 +37,9 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'gitguardian-api-key', variable: 'GITGUARDIAN_API_KEY')]) {
           sh '''
-              export PATH=$HOME/.local/bin:$PATH
               export GITGUARDIAN_API_KEY=$GITGUARDIAN_API_KEY
 
-              ggshield secret scan repo .
+              /var/lib/jenkins/.local/bin/ggshield secret scan repo .
           '''
         }
       }
