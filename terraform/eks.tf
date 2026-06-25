@@ -8,6 +8,8 @@ module "eks" {
   cluster_endpoint_public_access  = true
   cluster_endpoint_private_access = true
 
+  enable_irsa = true
+
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
@@ -15,9 +17,9 @@ module "eks" {
 
   eks_managed_node_groups = {
     main = {
-      desired_size = 2
+      desired_size = 3
       min_size     = 2
-      max_size     = 3
+      max_size     = 4
 
       instance_types = ["t3.micro"]
 
