@@ -35,6 +35,3 @@ connectDB().then(() => {
 module.exports = app;
 
 //analyticsRoutes
-
-AKIAQKXIYDDG5PB22SP6
-kMxP8sZ+h1wtmyTXNTou+Zljok1Hn4G+jej/0qFF
