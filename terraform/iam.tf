@@ -39,13 +39,9 @@ resource "aws_iam_role_policy_attachment" "codepipeline_admin" {
 }
 
 
-data "http" "alb_iam_policy" {
-  url = "https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.7.0/docs/install/iam_policy.json"
-}
-
 resource "aws_iam_policy" "alb_controller" {
   name   = "AWSLoadBalancerControllerIAMPolicy"
-  policy = data.http.alb_iam_policy.response_body
+  policy = file("${path.module}/iam_policy.json")
 }
 
 resource "aws_iam_role" "alb_controller" {
