@@ -1,5 +1,6 @@
 version: 2
 
-paths_ignore:
-  - terraform/**
-  - k8s/**
+secret:
+  ignored_paths:
+    - 'terraform/**'
+    - 'k8s/**'
