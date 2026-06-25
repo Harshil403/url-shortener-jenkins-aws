@@ -56,8 +56,8 @@ export default function UrlAnalyticsDetail() {
               </tr>
             </thead>
             <tbody>
-              {data.recentClicks.map((c, i) => (
-                <tr key={i}>
+              {data.recentClicks.map((c) => (
+                <tr key={c.timestamp}>
                   <td>{new Date(c.timestamp).toLocaleString()}</td>
                   <td>{c.browser}</td>
                   <td>{c.os}</td>
