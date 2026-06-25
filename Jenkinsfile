@@ -33,11 +33,14 @@ pipeline {
       }
     }
 
-    stage('GitGuardian secret scan') {
+    stage('GitGuardian Secret Scan') {
       steps {
         withCredentials([string(credentialsId: 'gitguardian-api-key', variable: 'GITGUARDIAN_API_KEY')]) {
-          sh '''#!/bin/bash
-            gitguardian scan repo --api-key "$GITGUARDIAN_API_KEY" --output json .
+          sh '''
+              export PATH=$HOME/.local/bin:$PATH
+              export GITGUARDIAN_API_KEY=$GITGUARDIAN_API_KEY
+
+              ggshield secret scan repo .
           '''
         }
       }
