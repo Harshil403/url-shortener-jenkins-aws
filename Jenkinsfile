@@ -33,33 +33,33 @@ pipeline {
       }
     }
 
-    //stage('Quality Gate') {
+    stage('Quality Gate') {
+      steps {
+        timeout(time: 5, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
+
+    stage('GitGuardian secret scan') {
+      steps {
+        withCredentials([string(credentialsId: 'gitguardian-api-key', variable: 'GITGUARDIAN_API_KEY')]) {
+          sh '''#!/bin/bash
+            gitguardian scan repo --api-key "$GITGUARDIAN_API_KEY" --output json .
+          '''
+        }
+      }
+    }
+
+    //stage('Trigger AWS CodePipeline') {
     //  steps {
-    //    timeout(time: 5, unit: 'MINUTES') {
-    //      waitForQualityGate abortPipeline: true
+    //    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-codepipeline-credentials']]) {
+    //      sh '''#!/bin/bash
+    //        aws codepipeline start-pipeline-execution --name "${CODEPIPELINE_NAME}"
+    //      '''
     //    }
     //  }
     //}
-
-    // stage('GitGuardian secret scan') {
-    //   steps {
-    //     withCredentials([string(credentialsId: 'gitguardian-api-key', variable: 'GITGUARDIAN_API_KEY')]) {
-    //       sh '''#!/bin/bash
-    //         gitguardian scan repo --api-key "$GITGUARDIAN_API_KEY" --output json .
-    //       '''
-    //     }
-    //   }
-    // }
-
-    // stage('Trigger AWS CodePipeline') {
-    //   steps {
-    //     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-codepipeline-credentials']]) {
-    //       sh '''#!/bin/bash
-    //         aws codepipeline start-pipeline-execution --name "${CODEPIPELINE_NAME}"
-    //       '''
-    //     }
-    //   }
-    // }
   }
 
   post {
