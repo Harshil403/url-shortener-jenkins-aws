@@ -19,6 +19,8 @@ spec:
           env:
             - name: PORT
               value: "5000"
+            - name: BASE_URL
+              value: "http://k8s-default-urlshort-75cb30e9e9-165995866.ap-south-1.elb.amazonaws.com"
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:

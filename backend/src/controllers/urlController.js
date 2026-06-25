@@ -32,7 +32,7 @@ exports.createShortUrl = async (req, res) => {
     return res.status(201).json({
       originalUrl: url.originalUrl,
       shortCode: url.shortCode,
-      shortUrl: `${BASE_URL}/${url.shortCode}`,
+      shortUrl: `${BASE_URL}/r/${url.shortCode}`,
       createdAt: url.createdAt,
     });
   } catch (err) {
@@ -82,7 +82,7 @@ exports.listUrls = async (req, res) => {
       urls.map((u) => ({
         originalUrl: u.originalUrl,
         shortCode: u.shortCode,
-        shortUrl: `${BASE_URL}/${u.shortCode}`,
+        shortUrl: `${BASE_URL}/r/${u.shortCode}`,
         clicks: u.clicks,
         createdAt: u.createdAt,
       }))
