@@ -38,8 +38,7 @@ pipeline {
         withCredentials([string(credentialsId: 'gitguardian-api-key', variable: 'GITGUARDIAN_API_KEY')]) {
           sh '''
               export GITGUARDIAN_API_KEY=$GITGUARDIAN_API_KEY
-
-              /var/lib/jenkins/.local/bin/ggshield secret scan ci
+              /var/lib/jenkins/.local/bin/ggshield secret scan path -r .
           '''
         }
       }
