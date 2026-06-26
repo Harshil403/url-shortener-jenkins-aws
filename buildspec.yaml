@@ -27,10 +27,7 @@ phases:
       - docker push $FRONTEND_REPO:$IMAGE_TAG
       - echo Updating kubeconfig...
       - aws eks update-kubeconfig --region ap-south-1 --name url-shortener-cluster
-      - kubectl rollout restart deployment backend
-      - kubectl rollout restart deployment frontend 
-      - kubectl apply -f k8s/frontend-service.yaml
-      - kubectl apply -f k8s/backend-service.yaml
+      - kubectl apply -f k8s/
 
 artifacts:
   files:
