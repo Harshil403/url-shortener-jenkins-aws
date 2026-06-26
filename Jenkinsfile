@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    AWS_DEFAULT_REGION = 'us-east-1'
+    AWS_DEFAULT_REGION = 'ap-south-1'
   }
 
   parameters {
@@ -41,15 +41,15 @@ pipeline {
       }
     }
 
-    //stage('Trigger AWS CodePipeline') {
-    //  steps {
-    //    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-codepipeline-credentials']]) {
-    //      sh '''#!/bin/bash
-    //        aws codepipeline start-pipeline-execution --name "${CODEPIPELINE_NAME}"
-    //      '''
-    //    }
-    //  }
-    //}
+    stage('Trigger AWS CodePipeline') {
+      steps {
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-codepipeline-credentials']]) {
+          sh '''#!/bin/bash
+            aws codepipeline start-pipeline-execution --name "${CODEPIPELINE_NAME}"
+          '''
+        }
+      }
+    }
   }
 
   post {
