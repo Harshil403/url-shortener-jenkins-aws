@@ -111,13 +111,6 @@ cd frontend && cp .env.example .env && npm install && npm start
 
 MongoDB connection defaults to a local instance; swap `MONGO_URI` in `.env` to point at Atlas or any other MongoDB instance.
 
-## Notable issues solved along the way (for anyone retracing this build)
-
-- **Node.js CA certificate mismatch with MongoDB Atlas** — Node's bundled CA store didn't recognize a newer Let's Encrypt root; fixed via `NODE_EXTRA_CA_CERTS` pointing at the system's CA bundle.
-- **EKS managed node group `desired_size` not respected on reapply** — the Terraform EKS module ignores changes to `desired_size` after initial creation by design; scaling afterward requires `aws eks update-nodegroup-config` directly.
-- **ALB target group health checks failing (404)** — the default `/` health check path didn't exist on the backend; fixed by scoping a `healthcheck-path: /health` annotation to the backend Service specifically (not the Ingress globally, which would have broken the frontend's check instead).
-- **Compromised AWS access key (`AWSCompromisedKeyQuarantineV3`)** — a key was accidentally committed to a public GitHub repo and auto-quarantined by AWS within the same session; resolved by rotating the key via the AWS root user (the restricted IAM user couldn't fix its own quarantine) and rebuilding infrastructure from scratch.
-
 ## License
 
 MIT
